@@ -1,0 +1,50 @@
+{% extends layout %}
+{% block content %}
+{% set persons = [
+	{
+		name: "Иван",
+		lastname: "Иванович"
+	},
+	{
+		name: "Василий",
+		lastname: "Васильевич"
+	},{
+		name: "Никита",
+		lastname: "Шумаков"
+	},{
+		name: "Як",
+		lastname: "Якович",
+		btn: true
+	}
+] %}
+	<section class="l-section">
+		<div class="l-container">
+		<h1>Переменные</h1>
+		{{ Macros.Icon('i-instagram') }}
+		<ul>
+			<li>-- Инлайн ( на текущей странице ) => {{ locals.title }}</li>
+			<li>-- Локальная ( для текущей странице ) => {{ locals.description }}</li>
+			<li>-- Глобальная ( для всех страниц ) => {{ common.data.title }}</li>
+			<img src="{{ storage ~ 'images/1.png' }}" alt="">
+		</ul>
+		<form class="c-contacts-form">
+      <input class="c-contacts-form__name" name="name" type="text" placeholder="Имя" required="">
+      <input class="c-contacts-form__lastname" name="lastname" type="text" placeholder="Фамилия" required="">
+      <input class="c-contacts-form__tel" name="tel" type="tel" placeholder="Телефон" required="">
+      <button type="submit" class="c-contacts-form__add-btn">Add</button>
+    </form>
+    <ul class="c-contacts-list">
+			{% for item in common.data.persons  %}
+				<li class="c-contact">
+					<div class="c-contact__name">{{ item.name  }}</div>
+					<div class="c-contact__job">{{ item.lastname }}</div>
+					<div class="c-contact__tel">{{ item.tel }}</div>
+					{% if item.btn %}
+						<button class="c-contact__delete-btn">Delete</button>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	</section>
+{% endblock %}
