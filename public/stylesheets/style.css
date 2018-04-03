@@ -897,7 +897,7 @@ body {
   opacity: 1;
   transition-property: transform, opacity;
   transition-timing-function: ease-in;
-  transition-duration: 0.5s;
+  transition-duration: 0.25s;
 }
 .c-contact div {
   margin-bottom: 5px;
@@ -908,7 +908,7 @@ body {
 }
 .c-contact--slide-default {
   animation-name: slide-default;
-  animation-duration: 0.5s;
+  animation-duration: 0.25s;
 }
 @keyframes slide-default {
   from {
@@ -945,7 +945,7 @@ body {
 }
 .c-contacts-list {
   width: 600px;
-  max-height: 505px;
+  max-height: 560px;
   margin: 0 auto;
   overflow-x: hidden;
   overflow-y: auto;

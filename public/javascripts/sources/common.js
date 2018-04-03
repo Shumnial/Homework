@@ -25,7 +25,7 @@ function onDeleteButtonClick () {
 		contact.addClass('c-contact--slide-right');
 		setTimeout(function () {
 			contact.remove();
-		}, 500)
+		}, 250)
 };
 
 function User (data) {
@@ -40,16 +40,24 @@ function User (data) {
 };
 
 function makeList (newId) {
-	const node = contactsList;
-	let nodes = userStore.map((el) => {
-		let addClass = newId === el.id ? 'c-contact--slide-default' : '';
-		return `<li class="c-contact ${addClass}" data-id="${el.id}"><div class="c-contact__lastname">Фамилия: ${el.lastname}</div>
-		<div class="c-contact__name">Имя: ${el.name}</div>
-		<div class="c-contacts__address">Улица: ${el.address}</div>
-		<div class="c-contact__tel">Тел: ${el.tel}</div>
-		<button class="c-contact__delete-btn">DELETE</button></li>`
-	});
-	node.html(nodes);
+	ymaps.ready(init);
+	function init(){
+		let myPlacemark;
+		const node = contactsList;
+		let nodes = userStore.map((el) => {
+			let addClass = newId === el.id ? 'c-contact--slide-default' : '';
+			if (el.coords) {
+				myPlacemark = new ymaps.Placemark(el.coords, { hintContent: `${el.name} ${el.lastname}`, balloonContent: '' });
+				myMap.geoObjects.add(myPlacemark);
+			};
+			return `<li class="c-contact ${addClass}" data-id="${el.id}"><div class="c-contact__lastname">Фамилия: ${el.lastname}</div>
+			<div class="c-contact__name">Имя: ${el.name}</div>
+			<div class="c-contacts__address">Улица: ${el.address}</div>
+			<div class="c-contact__tel">Тел: ${el.tel}</div>
+			<button class="c-contact__delete-btn">DELETE</button></li>`
+		});
+		node.html(nodes);
+	}
 };
 
 // Проверяет localStorage на наличие списка контактов
@@ -75,6 +83,33 @@ function sortContacts () {
   });
 };
 
+// MAP START
+	ymaps.ready(init);
+	var myMap;
+	function init(){     
+		myMap = new ymaps.Map("map", {
+			center: [56.84, 60.60],
+			zoom: 11
+		});
+	};
+// MAP START
+	function getCoords (address) {
+		let myGeocoder = ymaps.geocode(address);
+		return myGeocoder.then(res => {
+			let geoObj = res.geoObjects.get(0);
+			let coords = geoObj ? geoObj.geometry.getCoordinates() : null;
+			if(coords) {
+				myMap.setCenter(coords, 18);
+				let myPlacemark = new ymaps.Placemark(coords, { hintContent: 'Моя метка!', balloonContent: 'Ура' });
+				myMap.geoObjects.add(myPlacemark);
+			}
+			console.log("coords: ", coords);
+			return coords
+		})
+		.catch(err => console.log("err: ", err))
+	}
+// MAP END
+
 function handleSubmit(evt) {
 	evt.preventDefault();
 	let formValue = $('.c-contacts-form__tel').val();
@@ -92,11 +127,18 @@ function handleSubmit(evt) {
 		obj[el.name] = el.value;
 	});
 	obj.id = Date.now();
-	window.map.getCoords(obj.address);
-	userStore.push(obj);
-	sortContacts();
-	saveToLocal();
-	makeList(obj.id);
+
+	getCoords(obj.address).then(data => {
+		if(!data) {
+			alert('Неверный адрес');
+			return;
+		}
+		obj.coords = data;
+		userStore.push(obj);
+		sortContacts();
+		saveToLocal();
+		makeList(obj.id);
+	})
 };
 
 makeList();
