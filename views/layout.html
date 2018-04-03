@@ -20,9 +20,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="HandheldFriendly" content="true">
-
     <link href="{{ 'style.css'|css_asset }}" rel="stylesheet" type="text/css">
-    
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
   </head>
   <body>
     {% import 'macros/macro.html' as Macros %}
@@ -37,6 +36,8 @@
       {% include "blocks/__pagelist.html" %}
     {%- endif -%}
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="javascripts/maskedinput/dist/jquery.maskedinput.min.js"></script>
     <script src="{{ 'common.js'|js_asset }}"></script>
+    <script src="{{ 'map.js'|js_asset }}"></script>
   </body>
 </html>

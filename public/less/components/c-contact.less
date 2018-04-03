@@ -1,5 +1,27 @@
 .c-contact{
-	background-color: lightgrey;
-	margin-bottom: 10px;
-	padding: 10px;
+	background-color: rgba(255, 255, 150, 0.5);
+	border: 1px solid black;
+	padding: 10px 15px;
+	opacity: 1;
+	transition-property: transform, opacity;
+	transition-timing-function: ease-in;
+	transition-duration: 0.5s;
+	&--slide-right {
+		transform: translateX(100%);	
+		opacity: 0;
+	}
+
+	&--slide-default {
+		animation-name: slide-default;
+		animation-duration: 0.5s;
+	}
+};
+
+@keyframes slide-default {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(0);
+	}
 }
