@@ -890,23 +890,71 @@ body {
   width: 1px !important;
 }
 .c-contact {
-  background-color: lightgrey;
-  margin-bottom: 10px;
-  padding: 10px;
+  background-color: rgba(255, 255, 150, 0.5);
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px 15px;
+  opacity: 1;
+  transition-property: transform, opacity;
+  transition-timing-function: ease-in;
+  transition-duration: 0.5s;
+}
+.c-contact div {
+  margin-bottom: 5px;
+}
+.c-contact--slide-right {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.c-contact--slide-default {
+  animation-name: slide-default;
+  animation-duration: 0.5s;
+}
+@keyframes slide-default {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 .c-contacts-form {
-  width: 600px;
-  margin: 100px auto;
+  width: 900px;
+  margin: 10px auto 50px;
 }
-.c-contacts-form input {
+.c-contacts-form__name,
+.c-contacts-form__lastname,
+.c-contacts-form__tel,
+.c-contacts-form__address {
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 2px solid lightgrey;
+  border-radius: 10px;
+}
+.c-contacts-form__name--invalid,
+.c-contacts-form__lastname--invalid,
+.c-contacts-form__tel--invalid,
+.c-contacts-form__address--invalid {
+  border: 2px solid red;
+}
+.c-contacts-form__add-btn {
+  width: 60px;
   padding: 10px;
+  border: 2px solid lightgrey;
+  border-radius: 10px;
 }
 .c-contacts-list {
   width: 600px;
-  min-height: 110px;
+  max-height: 505px;
   margin: 0 auto;
-  border: 2px solid lightblue;
-  box-shadow: 0 1px 10px 0 black;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.c-map {
+  width: 900px;
+  height: 500px;
+  background-image: url('/images/map.jpeg');
+  margin: 0 auto;
 }
 .h-clearfix:before,
 .h-clearfix:after {
