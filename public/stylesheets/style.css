@@ -924,8 +924,8 @@ body {
 }
 .c-contacts-form__name,
 .c-contacts-form__lastname,
-.c-contacts-form__tel,
-.c-contacts-form__address {
+.c-contacts-form__address,
+.c-contacts-form__tel {
   padding: 12px;
   margin-bottom: 10px;
   border: 2px solid lightgrey;
@@ -933,9 +933,13 @@ body {
 }
 .c-contacts-form__name--invalid,
 .c-contacts-form__lastname--invalid,
-.c-contacts-form__tel--invalid,
-.c-contacts-form__address--invalid {
+.c-contacts-form__address--invalid,
+.c-contacts-form__tel--invalid {
   border: 2px solid red;
+}
+.c-contacts-form__name,
+.c-contacts-form__lastname {
+  text-transform: capitalize;
 }
 .c-contacts-form__add-btn {
   width: 60px;

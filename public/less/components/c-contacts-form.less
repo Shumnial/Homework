@@ -4,8 +4,8 @@
 
 	&__name,
 	&__lastname,
-	&__tel,
-	&__address {
+	&__address,
+	&__tel {
 		padding: 12px;
 		margin-bottom: 10px;
 		border: 2px solid lightgrey;
@@ -14,6 +14,11 @@
 		&--invalid {
 			border: 2px solid red;
 		}
+	}
+
+	&__name,
+	&__lastname {
+		text-transform: capitalize;
 	}
 
 	&__add-btn {

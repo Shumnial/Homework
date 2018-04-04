@@ -5,10 +5,12 @@ let persons = [{'name': 'Андрей', 'lastname': 'Андреевич'}, {'nam
 let formName = $('.c-contacts-form__name');
 let formLastname = $('.c-contacts-form__lastname');
 let formTel = $('.c-contacts-form__tel');
-function makeMask () {
-	formTel.mask('+7(999) 999-9999');
+
+/* function makeMask () {
+	  formTel.inputmask({"mask": "+7(999) 999-9999"});
 }
 makeMask();
+*/
 
 let userStore = [];
 getInitial();
@@ -47,12 +49,20 @@ function makeList (newId) {
 		let nodes = userStore.map((el) => {
 			let addClass = newId === el.id ? 'c-contact--slide-default' : '';
 			if (el.coords) {
-				myPlacemark = new ymaps.Placemark(el.coords, { hintContent: `${el.name} ${el.lastname}`, balloonContent: '' });
+				myMap.setCenter(el.coords, 18);
+				myPlacemark = new ymaps.Placemark(el.coords, 
+				{
+					hintContent: `${el.name} ${el.lastname}`,
+					balloonContent: `<p>${el.name} ${el.lastname}</p><button class="remove-placemark">DELETE</button>` 
+				});
 				myMap.geoObjects.add(myPlacemark);
+				/*myPlacemark.events.add('click', function () {
+					myMap.geoObjects.remove(myPlacemark);
+				}); */
 			};
 			return `<li class="c-contact ${addClass}" data-id="${el.id}"><div class="c-contact__lastname">Фамилия: ${el.lastname}</div>
 			<div class="c-contact__name">Имя: ${el.name}</div>
-			<div class="c-contacts__address">Улица: ${el.address}</div>
+			<div class="c-contacts__address">${el.address}</div>
 			<div class="c-contact__tel">Тел: ${el.tel}</div>
 			<button class="c-contact__delete-btn">DELETE</button></li>`
 		});
@@ -92,22 +102,15 @@ function sortContacts () {
 			zoom: 11
 		});
 	};
-// MAP START
 	function getCoords (address) {
 		let myGeocoder = ymaps.geocode(address);
 		return myGeocoder.then(res => {
 			let geoObj = res.geoObjects.get(0);
 			let coords = geoObj ? geoObj.geometry.getCoordinates() : null;
-			if(coords) {
-				myMap.setCenter(coords, 18);
-				let myPlacemark = new ymaps.Placemark(coords, { hintContent: 'Моя метка!', balloonContent: 'Ура' });
-				myMap.geoObjects.add(myPlacemark);
-			}
-			console.log("coords: ", coords);
-			return coords
+			return coords;
 		})
 		.catch(err => console.log("err: ", err))
-	}
+	};
 // MAP END
 
 function handleSubmit(evt) {
