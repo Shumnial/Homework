@@ -56,9 +56,10 @@ function makeList (newId) {
 					balloonContent: `<p>${el.name} ${el.lastname}</p><button class="remove-placemark">DELETE</button>` 
 				});
 				myMap.geoObjects.add(myPlacemark);
-				/*myPlacemark.events.add('click', function () {
-					myMap.geoObjects.remove(myPlacemark);
-				}); */
+				myMap.geoObjects.events.add('click', function (evt) {
+					var object = evt.get('target');
+					myMap.geoObjects.remove(object)
+				})
 			};
 			return `<li class="c-contact ${addClass}" data-id="${el.id}"><div class="c-contact__lastname">Фамилия: ${el.lastname}</div>
 			<div class="c-contact__name">Имя: ${el.name}</div>
